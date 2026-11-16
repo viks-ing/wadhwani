@@ -1,0 +1,8 @@
+{
+  "status": "connected",
+  "database_type": "PostgreSQL / SQLite Persistent Hybrid Store",
+  "last_backup": "2026-11-15T13:35:12.780Z",
+  "meals_count": 8,
+  "orders_count": 1,
+  "subscribers_count": 124
+}
