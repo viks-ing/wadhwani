@@ -1,6 +1,7 @@
 import { FoodProvider, ProviderMenuItem, ProviderType } from '../types';
 import { ALL_FOOD_PROVIDERS, DEMO_HOMEBITE_PARTNERS, DISCOVERED_REAL_BUSINESSES, HYDERABAD_LOCALITIES, LocalityInfo } from '../data/discoveredAndDemoProviders';
 import { getMenuItemsForProvider, SYNTHETIC_MENU_ITEMS } from '../data/syntheticProvidersData';
+import { getHybridMenuItemsForProvider, ALL_HYBRID_MENU_ITEMS } from '../data/hybridMenusData';
 import { haversineKm, LatLon } from '../lib/geoService';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
@@ -96,10 +97,8 @@ export async function fetchNearbyProviders(query: NearbyProvidersQuery): Promise
       const dist = haversineKm(userCoord, providerCoord);
       const distanceKm = Number(dist.toFixed(1));
 
-      // Attach menu for approved demo/real partners
-      const menu = p.partnershipStatus === 'approved' 
-        ? getMenuItemsForProvider(p.id) 
-        : undefined;
+      // Attach rich hybrid menu for every provider (real verified or tailored synthetic fallback)
+      const menu = getHybridMenuItemsForProvider(p.id, p.name, p.cuisine);
 
       return {
         ...p,

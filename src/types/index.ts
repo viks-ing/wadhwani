@@ -12,6 +12,18 @@ export type PartnershipStatus = 'not_contacted' | 'contacted' | 'pending' | 'app
 export type VerificationStatus = 'unverified' | 'verification_pending' | 'verified';
 export type DiscoveryZone = 'zone_1_core' | 'zone_2_nearby' | 'zone_3_extended' | 'zone_4_hyderabad_wide';
 
+export type MenuSource = 
+  | 'google_business_profile' 
+  | 'official_website' 
+  | 'official_pdf' 
+  | 'provider' 
+  | 'synthetic';
+
+export type MenuStatus = 
+  | 'verified' 
+  | 'unverified' 
+  | 'sample';
+
 export interface FoodProvider {
   id: string;
   name: string;
@@ -51,17 +63,25 @@ export interface FoodProvider {
 export interface ProviderMenuItem {
   id: string;
   providerId: string;
+  restaurantId?: string; // alias for database schema
   name: string;
   description: string;
+  category: 'breakfast' | 'lunch' | 'dinner' | 'snacks' | 'high-protein' | string;
   price: number;
   imageUrl: string;
-  cuisine: string;
-  category: 'breakfast' | 'lunch' | 'dinner' | 'snacks' | 'high-protein';
+  isVegetarian?: boolean;
   dietary: 'veg' | 'non-veg' | 'vegan';
+  dietaryTags?: string[];
   tags: string[];
+  isAvailable: boolean;
+  menuSource?: MenuSource;
+  menuStatus?: MenuStatus;
+  sourceUrl?: string;
+  lastUpdatedAt?: string;
+  isDemo?: boolean;
+  cuisine?: string;
   calories?: number;
   protein?: number;
-  isAvailable: boolean;
 }
 
 export interface UserProfile {
