@@ -48,7 +48,7 @@ export const AuthModal: React.FC<AuthModalProps> = () => {
   const [selectedRole, setSelectedRole] = useState<'customer' | 'chef' | 'delivery'>('customer');
   
   // Role specific fields
-  const [collegeOrWorkplace, setCollegeOrWorkplace] = useState('Delhi Technological University (DTU)');
+  const [collegeOrWorkplace, setCollegeOrWorkplace] = useState('Sreenidhi Institute of Science and Technology (SNIST)');
   const [kitchenName, setKitchenName] = useState('');
   const [specialty, setSpecialty] = useState('');
   const [vehicleNumber, setVehicleNumber] = useState('');
@@ -266,7 +266,7 @@ export const AuthModal: React.FC<AuthModalProps> = () => {
                           </span>
                         </div>
                         <p className="text-[11px] text-gray-600 mt-0.5">
-                          DTU Campus • Explore homemade meals, cart & dabba plans
+                          SNIST Campus • Explore homemade meals, cart & dabba plans
                         </p>
                       </div>
                     </div>
@@ -326,7 +326,7 @@ export const AuthModal: React.FC<AuthModalProps> = () => {
                           </span>
                         </div>
                         <p className="text-[11px] text-gray-600 mt-0.5">
-                          Hero Splendor • Accept delivery assignments & track payouts
+                          TS 08 EF 4321 • Accept delivery assignments & track payouts
                         </p>
                       </div>
                     </div>

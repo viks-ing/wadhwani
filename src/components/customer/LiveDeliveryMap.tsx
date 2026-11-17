@@ -217,7 +217,8 @@ export const LiveDeliveryMap: React.FC<LiveDeliveryMapProps> = ({ order, current
   const deliveryAddressSnippet = order.deliveryAddress || `${destinationLabel}, Campus Gate`;
   
   // Dynamic Delivery Partner
-  const riderName = order.deliveryPartner?.name || 'Ramesh Kumar';
+  const isAssigned = !!order.deliveryPartner && order.deliveryStep !== 'awaiting_assignment';
+  const riderName = isAssigned ? (order.deliveryPartner?.name || 'Ramesh Kumar') : 'Locating Campus Rider...';
   const riderPhone = order.deliveryPartner?.phone || '+91 98711 00223';
   const riderVehicle = order.deliveryPartner?.vehicleNumber || 'TS 08 EF 4321 (Hero Splendor)';
   const riderRating = order.deliveryPartner?.rating || 4.9;
@@ -299,7 +300,7 @@ export const LiveDeliveryMap: React.FC<LiveDeliveryMapProps> = ({ order, current
             <div style="text-align: left;">
               <span style="font-size: 10px; font-weight: 800; display: block; line-height: 1;">${riderName}</span>
               <span style="font-size: 8px; opacity: 0.85; display: block; line-height: 1; margin-top: 2px;">
-                ${order.status === 'out_for_delivery' ? `On Route • ${riderSpeed} km/h` : order.status === 'delivered' ? 'Delivered' : 'At Kitchen'}
+                ${!isAssigned ? 'Broadcasting Trip' : order.status === 'out_for_delivery' ? `On Route • ${riderSpeed} km/h` : order.status === 'delivered' ? 'Delivered' : 'At Kitchen'}
               </span>
             </div>
           </div>

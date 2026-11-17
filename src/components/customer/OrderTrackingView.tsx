@@ -327,32 +327,49 @@ export const OrderTrackingView: React.FC = () => {
               <span>Assigned Campus Delivery Partner</span>
             </h3>
 
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center border-2 border-indigo-400 shadow-xs flex-shrink-0">
-                  <Bike className="w-6 h-6 text-indigo-700" />
+            {currentOrder.deliveryPartner && currentOrder.deliveryStep !== 'awaiting_assignment' ? (
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center border-2 border-indigo-400 shadow-xs flex-shrink-0">
+                    <Bike className="w-6 h-6 text-indigo-700" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-900">
+                      {currentOrder.deliveryPartner.name}
+                    </h4>
+                    <p className="text-xs text-gray-500">
+                      {currentOrder.deliveryPartner.vehicleNumber || 'TS 08 EF 4321 (Hero Splendor)'}
+                    </p>
+                    <span className="text-[10px] text-amber-600 font-extrabold flex items-center gap-0.5 mt-0.5">
+                      ★ {currentOrder.deliveryPartner.rating || 4.9} Verified Campus Rider
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-gray-900">
-                    {currentOrder.deliveryPartner?.name || 'Ramesh Kumar'}
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    {currentOrder.deliveryPartner?.vehicleNumber || 'TS 08 EF 4321 (Hero Splendor)'}
-                  </p>
-                  <span className="text-[10px] text-amber-600 font-extrabold flex items-center gap-0.5 mt-0.5">
-                    ★ {currentOrder.deliveryPartner?.rating || 4.9} Verified Campus Rider
-                  </span>
-                </div>
-              </div>
 
-              <a
-                href={`tel:${currentOrder.deliveryPartner?.phone || '+919871100223'}`}
-                className="p-3 rounded-2xl bg-hb-green-50 hover:bg-hb-green-100 text-hb-green-700 border border-hb-green-200 transition shadow-2xs"
-                title="Call Delivery Partner"
-              >
-                <Phone className="w-5 h-5" />
-              </a>
-            </div>
+                <a
+                  href={`tel:${currentOrder.deliveryPartner.phone || '+919871100223'}`}
+                  className="p-3 rounded-2xl bg-hb-green-50 hover:bg-hb-green-100 text-hb-green-700 border border-hb-green-200 transition shadow-2xs"
+                  title="Call Delivery Partner"
+                >
+                  <Phone className="w-5 h-5" />
+                </a>
+              </div>
+            ) : (
+              <div className="p-4 bg-amber-50/80 rounded-2xl border border-amber-200 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center animate-pulse">
+                    <Bike className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900">Connecting to Campus Delivery Partner...</h4>
+                    <p className="text-[11px] text-amber-800 mt-0.5">
+                      Order broadcasted to nearby campus riders in your zone. Awaiting rider assignment.
+                    </p>
+                  </div>
+                </div>
+                <span className="w-3 h-3 rounded-full bg-amber-500 animate-ping flex-shrink-0"></span>
+              </div>
+            )}
           </div>
 
           {/* Delivery Location & Notes */}

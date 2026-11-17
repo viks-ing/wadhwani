@@ -124,6 +124,7 @@ interface AppContextType {
     orderNotes?: string;
   }) => Promise<Order>;
   updateOrderStatus: (orderId: string, status: OrderStatus) => void;
+  acceptDeliveryOrder: (orderId: string, rider: UserProfile) => Promise<void>;
   
   // Subscriptions
   userSubscriptions: string[];
@@ -620,7 +621,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       customerName: currentUser.name,
       customerPhone: currentUser.phone || '+91 98765 43210',
       deliveryAddress,
-      collegeOrWorkplace: currentCampus,
+      collegeOrWorkplace: currentCampus || 'SNIST Campus, Yamnampet, Ghatkesar',
       chefId: primaryChefId,
       chefName: primaryChefName,
       kitchenName: primaryKitchen,
@@ -644,17 +645,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       estimatedDeliveryTime: '20-25 mins',
-      deliveryPartnerId: 'user-delivery-1',
       deliveryPayout: 45,
-      deliveryStep: 'accepted',
-      deliveryPartner: {
-        id: 'user-delivery-1',
-        name: 'Ramesh Kumar',
-        phone: '+91 98711 00223',
-        vehicleNumber: 'DL 08 EF 4321',
-        rating: 4.92,
-        avatarUrl: '',
-      },
+      deliveryStep: 'awaiting_assignment',
+      deliveryPartnerId: undefined,
+      deliveryPartner: undefined,
       statusTimestamps: {
         order_placed: new Date().toISOString(),
       },
@@ -682,6 +676,48 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return newOrder;
   };
 
+  // Delivery assignment: Rider claims order
+  const acceptDeliveryOrder = async (orderId: string, rider: UserProfile) => {
+    const riderInfo = {
+      id: rider.id,
+      name: rider.name || 'Ramesh Kumar',
+      phone: rider.phone || '+91 98711 00223',
+      vehicleNumber: rider.vehicleNumber || 'TS 08 EF 4321 (Hero Splendor)',
+      vehicleType: rider.vehicleType || 'Motorcycle',
+      rating: rider.deliveryRating || 4.92,
+      avatarUrl: rider.avatarUrl || '',
+    };
+
+    setOrders((prev) =>
+      prev.map((order) => {
+        if (order.id === orderId) {
+          const updatedTimestamps = {
+            ...order.statusTimestamps,
+            ready_for_pickup: order.statusTimestamps?.ready_for_pickup || new Date().toISOString(),
+          };
+          const updated: Order = {
+            ...order,
+            deliveryPartnerId: rider.id,
+            deliveryPartner: riderInfo,
+            deliveryStep: 'accepted',
+            status: order.status === 'order_placed' ? 'ready_for_pickup' : order.status,
+            updatedAt: new Date().toISOString(),
+            statusTimestamps: updatedTimestamps,
+          };
+          if (activeOrder?.id === orderId) {
+            setActiveOrder(updated);
+          }
+          return updated;
+        }
+        return order;
+      })
+    );
+
+    // Global Supabase Realtime Broadcast
+    await broadcastRealtimeEvent('order_assigned', { orderId, rider: riderInfo });
+    addToast(`Delivery assignment accepted for ${orderId}! Proceed to kitchen. 🛵`, 'success');
+  };
+
   // Update order status with Supabase Global Realtime Broadcast
   const updateOrderStatus = async (orderId: string, status: OrderStatus) => {
     setOrders((prev) =>
@@ -691,9 +727,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             ...order.statusTimestamps,
             [status]: new Date().toISOString(),
           };
-          const updated = {
+          let step = order.deliveryStep;
+          if (status === 'out_for_delivery') step = 'picked_up';
+          else if (status === 'delivered') step = 'delivered';
+
+          const updated: Order = {
             ...order,
             status,
+            deliveryStep: step,
             updatedAt: new Date().toISOString(),
             statusTimestamps: updatedTimestamps,
           };
@@ -839,6 +880,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setActiveOrder,
         placeOrder,
         updateOrderStatus,
+        acceptDeliveryOrder,
         userSubscriptions,
         subscribeToPlan,
         chefApplications,

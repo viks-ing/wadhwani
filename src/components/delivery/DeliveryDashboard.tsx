@@ -24,12 +24,14 @@ export const DeliveryDashboard: React.FC = () => {
     currentUser, 
     orders, 
     updateOrderStatus, 
+    acceptDeliveryOrder,
     setActiveView,
+    currentCampus,
     addToast 
   } = useApp();
 
   const [isOnline, setIsOnline] = useState(currentUser.isOnline ?? true);
-  const [activeTab, setActiveTab] = useState<'active' | 'available' | 'earnings'>('active');
+  const [activeTab, setActiveTab] = useState<'active' | 'available' | 'earnings'>('available');
 
   const toggleOnlineStatus = () => {
     const next = !isOnline;
@@ -37,27 +39,29 @@ export const DeliveryDashboard: React.FC = () => {
     addToast(next ? 'You are now ONLINE. Ready for delivery assignments!' : 'You are now OFFLINE.', next ? 'success' : 'info');
   };
 
-  // Orders assigned to this delivery partner or currently in delivery
+  // Orders assigned to this delivery partner
   const myAssignedOrders = orders.filter(
-    o => o.deliveryPartnerId === currentUser.id || o.deliveryPartner?.id === currentUser.id || o.status === 'out_for_delivery' || o.status === 'chef_preparing'
+    o => (o.deliveryPartnerId === currentUser.id || o.deliveryPartner?.id === currentUser.id) &&
+         o.status !== 'delivered' && o.status !== 'cancelled'
   );
 
-  // Available orders that are ready for pickup but unassigned or open
+  // Available orders that are unassigned or waiting for rider acceptance
   const availableOrders = orders.filter(
-    o => o.status === 'ready_for_pickup' || (o.status === 'chef_preparing' && !o.deliveryPartnerId)
+    o => (!o.deliveryPartnerId || o.deliveryStep === 'awaiting_assignment') &&
+         o.status !== 'delivered' && o.status !== 'cancelled'
   );
 
-  // Active delivery (first ongoing order)
-  const activeOrder = orders.find(
-    o => o.status === 'ready_for_pickup' || o.status === 'out_for_delivery'
-  );
+  // Active delivery (first ongoing trip assigned to this rider)
+  const activeOrder = myAssignedOrders.find(
+    o => o.status === 'ready_for_pickup' || o.status === 'out_for_delivery' || o.deliveryStep === 'accepted' || o.deliveryStep === 'picked_up'
+  ) || myAssignedOrders[0];
 
-  const completedOrders = orders.filter(o => o.status === 'delivered');
+  const completedOrders = orders.filter(o => (o.deliveryPartnerId === currentUser.id || o.deliveryPartner?.id === currentUser.id) && o.status === 'delivered');
   const todayEarnings = completedOrders.length * 45 + (activeOrder ? 45 : 0);
 
-  const handleAcceptOrder = (orderId: string) => {
-    updateOrderStatus(orderId, 'ready_for_pickup');
-    addToast('Delivery accepted! Navigate to the home chef kitchen for pickup.', 'success');
+  const handleAcceptOrder = async (orderId: string) => {
+    await acceptDeliveryOrder(orderId, currentUser);
+    setActiveTab('active');
   };
 
   const handleConfirmPickup = (orderId: string) => {
@@ -103,7 +107,7 @@ export const DeliveryDashboard: React.FC = () => {
                 </span>
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                Vehicle: <strong>{currentUser.vehicleNumber || 'DL 08 EF 4321 (Hero Splendor)'}</strong> • Zone: <strong>DTU & Rohini Sector Hub</strong>
+                Vehicle: <strong>{currentUser.vehicleNumber || 'TS 08 EF 4321 (Hero Splendor)'}</strong> • Zone: <strong>{currentCampus ? currentCampus.split(',')[0].trim() : 'SNIST Campus & Yamnampet / Ghatkesar Hub'}</strong>
               </p>
               <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-500">
                 <span className="text-amber-600 font-bold flex items-center gap-1">
@@ -256,7 +260,7 @@ export const DeliveryDashboard: React.FC = () => {
                   <div>
                     <h4 className="text-sm font-bold text-gray-900">{activeOrder.kitchenName}</h4>
                     <p className="text-xs text-gray-600 mt-0.5">
-                      📍 Sector 16, Rohini (1.2 km from DTU)
+                      📍 {activeOrder.collegeOrWorkplace ? `Near ${activeOrder.collegeOrWorkplace.split(',')[0]} (~1.2 km)` : 'Neighborhood Home Kitchen (~1.2 km)'}
                     </p>
                     <p className="text-[11px] text-gray-500 mt-1">
                       Chef: <strong>{activeOrder.chefName}</strong>
@@ -387,7 +391,7 @@ export const DeliveryDashboard: React.FC = () => {
                       </p>
                       <p className="text-gray-700 font-bold flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        Drop: {order.collegeOrWorkplace.split(',')[0]} ({order.deliveryAddress})
+                        Drop: {(order.collegeOrWorkplace || currentCampus || 'Campus Gate').split(',')[0]} ({order.deliveryAddress})
                       </p>
                     </div>
 
