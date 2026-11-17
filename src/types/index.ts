@@ -1,4 +1,68 @@
-export type UserRole = 'customer' | 'chef' | 'delivery' | 'admin';
+export type UserRole = 'customer' | 'chef' | 'delivery' | 'admin' | 'restaurant_owner';
+
+export type ProviderType = 
+  | 'home_kitchen' 
+  | 'cloud_kitchen' 
+  | 'tiffin_service' 
+  | 'healthy_restaurant' 
+  | 'restaurant';
+
+export type DiscoveryStatus = 'discovered' | 'researched' | 'verified' | 'rejected';
+export type PartnershipStatus = 'not_contacted' | 'contacted' | 'pending' | 'approved' | 'rejected';
+export type VerificationStatus = 'unverified' | 'verification_pending' | 'verified';
+export type DiscoveryZone = 'zone_1_core' | 'zone_2_nearby' | 'zone_3_extended' | 'zone_4_hyderabad_wide';
+
+export interface FoodProvider {
+  id: string;
+  name: string;
+  slug?: string;
+  type: ProviderType;
+  description: string;
+  address: string;
+  locality: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+  lat: number;
+  lon: number;
+  cuisine: string[];
+  rating: number;
+  reviewsCount: number;
+  prepTimeMinutes: number;
+  minOrderAmount: number;
+  isDeliveryAvailable: boolean;
+  deliveryRadiusKm?: number;
+  openingHours: string;
+  coverImage: string;
+  isVerified: boolean;
+  isDemo: boolean;
+  discoveryStatus?: DiscoveryStatus;
+  partnershipStatus?: PartnershipStatus;
+  verificationStatus?: VerificationStatus;
+  zone?: DiscoveryZone;
+  phone?: string;
+  email?: string;
+  status: 'pending' | 'approved' | 'rejected'; // mapped to partnershipStatus
+  ownerId?: string;
+  distanceKm?: number;
+  menu?: ProviderMenuItem[];
+}
+
+export interface ProviderMenuItem {
+  id: string;
+  providerId: string;
+  name: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+  cuisine: string;
+  category: 'breakfast' | 'lunch' | 'dinner' | 'snacks' | 'high-protein';
+  dietary: 'veg' | 'non-veg' | 'vegan';
+  tags: string[];
+  calories?: number;
+  protein?: number;
+  isAvailable: boolean;
+}
 
 export interface UserProfile {
   id: string;

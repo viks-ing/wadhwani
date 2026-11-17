@@ -12,9 +12,15 @@ import {
   AlertTriangle,
   FileText,
   Activity,
-  ArrowRight
+  ArrowRight,
+  Compass,
+  Phone,
+  Check,
+  Search
 } from 'lucide-react';
 import { CAMPUS_LOCATIONS } from '../../data/mockData';
+import { DISCOVERED_REAL_BUSINESSES, LocalityInfo } from '../../data/discoveredAndDemoProviders';
+import { FoodProvider } from '../../types';
 
 export const AdminDashboard: React.FC = () => {
   const { 
@@ -24,16 +30,48 @@ export const AdminDashboard: React.FC = () => {
     orders, 
     meals,
     setActiveView,
-    logout 
+    logout,
+    addToast
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'approvals' | 'orders' | 'campuses'>('approvals');
+  const [activeTab, setActiveTab] = useState<'approvals' | 'discovered' | 'orders' | 'campuses'>('approvals');
+  const [discoveredList, setDiscoveredList] = useState<FoodProvider[]>(DISCOVERED_REAL_BUSINESSES);
+  const [zoneFilter, setZoneFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Metrics
   const totalRevenue = 412580; // Gross marketplace volume
   const totalStudents = 3480;
   const totalChefs = 64;
   const pendingApprovals = chefApplications.filter(a => a.status === 'pending');
+
+  const handleUpdateStatus = (id: string, newPartnership: 'contacted' | 'approved' | 'rejected') => {
+    setDiscoveredList(prev => prev.map(p => {
+      if (p.id === id) {
+        return {
+          ...p,
+          partnershipStatus: newPartnership,
+          status: newPartnership === 'approved' ? 'approved' : 'pending',
+          isVerified: newPartnership === 'approved' ? true : p.isVerified
+        };
+      }
+      return p;
+    }));
+    addToast(`Business listing status updated to "${newPartnership}"`, 'success');
+  };
+
+  const filteredDiscovered = discoveredList.filter(p => {
+    if (zoneFilter !== 'all' && p.zone !== zoneFilter) return false;
+    if (statusFilter !== 'all' && p.partnershipStatus !== statusFilter) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      if (!p.name.toLowerCase().includes(q) && !p.locality.toLowerCase().includes(q) && !p.address.toLowerCase().includes(q)) {
+        return false;
+      }
+    }
+    return true;
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -123,7 +161,19 @@ export const AdminDashboard: React.FC = () => {
           }`}
         >
           <ShieldCheck className="w-4 h-4" />
-          <span>Home Kitchen Verification Queue ({pendingApprovals.length})</span>
+          <span>Kitchen Verification Queue ({pendingApprovals.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('discovered')}
+          className={`pb-3 px-4 text-xs font-bold transition border-b-2 flex items-center gap-2 ${
+            activeTab === 'discovered'
+              ? 'border-hb-green-600 text-hb-green-700'
+              : 'border-transparent text-gray-500 hover:text-gray-800'
+          }`}
+        >
+          <Compass className="w-4 h-4" />
+          <span>Discovered Food Businesses (55 Candidates)</span>
         </button>
 
         <button
@@ -228,6 +278,127 @@ export const AdminDashboard: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* TAB 1.5: DISCOVERED REAL BUSINESSES DIRECTORY */}
+      {activeTab === 'discovered' && (
+        <div className="space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 className="text-base font-bold text-gray-900">
+                Discovered Food Businesses & Research Directory (55 Candidates)
+              </h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Research listings across Telangana Zones. Only approved partners can receive customer orders.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500">Showing {filteredDiscovered.length} of {discoveredList.length}</span>
+            </div>
+          </div>
+
+          {/* Directory Filter Bar */}
+          <div className="bg-white rounded-2xl p-4 border border-hb-green-100 shadow-soft flex flex-col md:flex-row items-center gap-3">
+            <div className="relative flex-1 w-full">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search business name, locality, street..."
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-gray-200 outline-none focus:border-hb-green-500 text-gray-800"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 w-full md:w-auto">
+              <select
+                value={zoneFilter}
+                onChange={(e) => setZoneFilter(e.target.value)}
+                className="text-xs py-2 px-3 rounded-xl border border-gray-200 bg-white font-semibold text-gray-700 outline-none"
+              >
+                <option value="all">All Zones</option>
+                <option value="zone_1_core">Zone 1 (Core SNIST 0-5km)</option>
+                <option value="zone_2_nearby">Zone 2 (Nearby 5-12km)</option>
+                <option value="zone_3_extended">Zone 3 (Extended 12-25km)</option>
+                <option value="zone_4_hyderabad_wide">Zone 4 (Hyderabad Wide 25km+)</option>
+              </select>
+
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="text-xs py-2 px-3 rounded-xl border border-gray-200 bg-white font-semibold text-gray-700 outline-none"
+              >
+                <option value="all">All Partnership Statuses</option>
+                <option value="not_contacted">Not Contacted</option>
+                <option value="contacted">Contacted / In Discussion</option>
+                <option value="approved">Approved HomeBite Partner</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Businesses List */}
+          <div className="space-y-3">
+            {filteredDiscovered.map((b) => (
+              <div
+                key={b.id}
+                className="bg-white rounded-2xl p-4 border border-gray-200 shadow-2xs hover:border-hb-green-300 transition flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h4 className="text-sm font-black text-gray-900">{b.name}</h4>
+                    <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 text-[10px] font-bold">
+                      {b.locality}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-hb-cream text-hb-green-800 text-[10px] font-bold capitalize">
+                      {b.type.replace(/_/g, ' ')}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase ${
+                      b.partnershipStatus === 'approved'
+                        ? 'bg-emerald-100 text-emerald-800'
+                        : b.partnershipStatus === 'contacted'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-gray-100 text-gray-600'
+                    }`}>
+                      {(b.partnershipStatus || 'not_contacted').replace(/_/g, ' ')}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-gray-600">{b.description}</p>
+                  <p className="text-[11px] text-gray-500">📍 {b.address} • Coordinates: {b.lat.toFixed(4)}, {b.lon.toFixed(4)}</p>
+                </div>
+
+                {/* Partner Management Actions */}
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {b.partnershipStatus !== 'contacted' && b.partnershipStatus !== 'approved' && (
+                    <button
+                      onClick={() => handleUpdateStatus(b.id, 'contacted')}
+                      className="px-3 py-1.5 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold transition"
+                    >
+                      Mark Contacted
+                    </button>
+                  )}
+
+                  {b.partnershipStatus !== 'approved' ? (
+                    <button
+                      onClick={() => handleUpdateStatus(b.id, 'approved')}
+                      className="px-3 py-1.5 rounded-xl bg-hb-green-600 hover:bg-hb-green-700 text-white text-xs font-bold transition flex items-center gap-1 shadow-2xs"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Approve as Partner</span>
+                    </button>
+                  ) : (
+                    <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Verified Partner (Ordering Enabled)</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       )}
 

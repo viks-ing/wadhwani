@@ -84,6 +84,7 @@ interface AppContextType {
   currentCampus: string;
   setCurrentCampus: (campus: string) => void;
   userCoords: LatLon | null;
+  setUserCoords: (coords: LatLon | null) => void;
   detectAndSetLocation: () => Promise<void>;
   isLocating: boolean;
   
@@ -332,7 +333,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Role Redirection Map
   const getRoleDashboard = (role: UserRole): ActiveViewType => {
     switch (role) {
-      case 'chef': return 'chef';
+      case 'chef': 
+      case 'restaurant_owner': return 'chef';
       case 'delivery': return 'delivery';
       case 'admin': return 'admin';
       case 'customer':
@@ -386,6 +388,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const roleTitles: Record<UserRole, string> = {
       customer: 'Student / Customer',
       chef: 'Home Chef (Anita Devi)',
+      restaurant_owner: 'Food Provider / Restaurant Owner',
       delivery: 'Delivery Partner (Ramesh Kumar)',
       admin: 'Operations Admin'
     };
@@ -796,6 +799,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         currentCampus,
         setCurrentCampus,
         userCoords,
+        setUserCoords,
         detectAndSetLocation,
         isLocating,
         meals,
