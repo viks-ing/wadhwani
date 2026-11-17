@@ -39,9 +39,10 @@ export const getStoredSupabaseConfig = () => {
   const url = savedUrl || envUrl || 'https://ihzljqgkhxsmrvfudnba.supabase.co';
   const key = savedKey || envKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloemxqcWdraHhzbXJ2ZnVkbmJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg1Mzg5NTcsImV4cCI6MjA1NDExNDk1N30.demo_public_key';
 
+  const isRealKey = Boolean(key && !key.includes('demo_public_key') && !key.includes('xyzcompany') && key.length > 50);
   const isConfigured = Boolean(
-    (savedUrl && savedKey) ||
-    (envUrl && envKey && envUrl !== 'https://xyzcompany.supabase.co')
+    (savedUrl && savedKey && isRealKey) ||
+    (envUrl && envKey && envUrl !== 'https://xyzcompany.supabase.co' && isRealKey)
   );
 
   return { url, key, isConfigured };

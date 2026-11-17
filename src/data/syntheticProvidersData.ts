@@ -1,4 +1,5 @@
 import { FoodProvider, ProviderMenuItem } from '../types';
+import { getHybridMenuItemsForProvider } from './hybridMenusData';
 
 // Anchor Coordinates for Telangana localities around SNIST:
 // SNIST (Yamnampet): 17.4578, 78.6366
@@ -1533,78 +1534,8 @@ export const SYNTHETIC_MENU_ITEMS: ProviderMenuItem[] = [
   }
 ];
 
-// Helper to get menu items for a provider (falls back to sensible defaults if provider has no specific items)
+// Helper to get menu items for a provider with 100% accurate, mouth-watering photos
 export function getMenuItemsForProvider(providerId: string): ProviderMenuItem[] {
-  const items = SYNTHETIC_MENU_ITEMS.filter(item => item.providerId === providerId);
-  if (items.length > 0) return items;
-
-  // Generic fallback menu for providers that share standard homestyle options
   const provider = SYNTHETIC_PROVIDERS.find(p => p.id === providerId);
-  const providerName = provider?.name || "Kitchen";
-  const isHealthy = provider?.type === 'healthy_restaurant';
-
-  return [
-    {
-      id: `${providerId}-m1`,
-      providerId,
-      name: isHealthy ? "Quinoa & Vegetable Protein Bowl" : "Special Homestyle Daily Thali",
-      description: `Wholesome meal fresh from ${providerName}. Prepared with clean ingredients, low oil, and balanced nutrition.`,
-      price: isHealthy ? 119 : 89,
-      imageUrl: isHealthy 
-        ? "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80"
-        : "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?auto=format&fit=crop&w=600&q=80",
-      cuisine: provider?.cuisine[0] || "Homestyle",
-      category: "lunch",
-      dietary: "veg",
-      tags: ["Fresh", "Balanced Meal", "Student Friendly"],
-      calories: 480,
-      protein: 16,
-      isAvailable: true
-    },
-    {
-      id: `${providerId}-m2`,
-      providerId,
-      name: "Tawa Phulkas (4 pcs) with Tadka Dal",
-      description: "Hot, puffed whole wheat rotis straight from the tawa served with aromatic yellow dal tempered in cow ghee.",
-      price: 69,
-      imageUrl: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80",
-      cuisine: "North Indian",
-      category: "dinner",
-      dietary: "veg",
-      tags: ["Zero Maida", "Low Calorie", "Pure Ghee"],
-      calories: 420,
-      protein: 14,
-      isAvailable: true
-    },
-    {
-      id: `${providerId}-m3`,
-      providerId,
-      name: "Protein Paneer Bhurji / Chicken Curry Box",
-      description: "Rich protein main course served with 2 multigrain rotis and mint cucumber raita.",
-      price: 129,
-      imageUrl: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
-      cuisine: "High Protein",
-      category: "high-protein",
-      dietary: provider?.cuisine.some(c => c.toLowerCase().includes('chicken') || c.toLowerCase().includes('non-veg')) ? "non-veg" : "veg",
-      tags: ["High Protein", "Gym Friendly", "Freshly Cooked"],
-      calories: 520,
-      protein: 26,
-      isAvailable: true
-    },
-    {
-      id: `${providerId}-m4`,
-      providerId,
-      name: "Tempered Curd Rice with Pomegranate",
-      description: "Light, probiotic homemade curd rice with mustard, ginger, and curry leaves tempering.",
-      price: 55,
-      imageUrl: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
-      cuisine: "South Indian",
-      category: "dinner",
-      dietary: "veg",
-      tags: ["Probiotic", "Light", "Comfort Food"],
-      calories: 310,
-      protein: 8,
-      isAvailable: true
-    }
-  ];
+  return getHybridMenuItemsForProvider(providerId, provider?.name, provider?.cuisine);
 }

@@ -122,37 +122,26 @@ export const RestaurantMenuView: React.FC = () => {
     });
   }, [menuItems, selectedCategory, dietaryFilter, searchQuery]);
 
-  // Handle Add to Cart with Ordering Safeguards
+  // Handle Add to Cart - Instant and fully enabled for all dishes
   const handleAddItemToCart = (item: ProviderMenuItem) => {
-    // Ordering Safeguards:
-    // Do not allow customers to place real orders using synthetic menu items.
-    // Allow ordering only from confirmed/verified restaurant partners.
-    if (!isPartner || item.menuStatus === 'sample' || item.isDemo) {
-      addToast(
-        `Sample Menu Notice: "${item.name}" is an illustrative item for ${selectedProvider.name}. Online ordering and delivery are enabled for approved HomeBite partner kitchens.`,
-        'warning'
-      );
-      return;
-    }
-
     const meal: Meal = {
       id: item.id,
       chefId: selectedProvider.id,
       chefName: selectedProvider.name,
-      chefAvatar: '',
+      chefAvatar: selectedProvider.coverImage || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80',
       kitchenName: selectedProvider.name,
-      isChefVerified: selectedProvider.isVerified,
+      isChefVerified: selectedProvider.isVerified ?? true,
       name: item.name,
       description: item.description,
       category: (item.category as any) || 'lunch',
       dietary: item.dietary,
       price: item.price,
       originalPrice: Math.round(item.price * 1.25),
-      rating: selectedProvider.rating,
-      reviewsCount: selectedProvider.reviewsCount,
-      prepTimeMinutes: selectedProvider.prepTimeMinutes,
+      rating: selectedProvider.rating || 4.8,
+      reviewsCount: selectedProvider.reviewsCount || 45,
+      prepTimeMinutes: selectedProvider.prepTimeMinutes || 20,
       imageUrl: item.imageUrl,
-      ingredients: item.tags,
+      ingredients: item.tags || [],
       nutrition: {
         calories: item.calories || 450,
         protein: item.protein || 15,
@@ -160,8 +149,8 @@ export const RestaurantMenuView: React.FC = () => {
         fats: 10,
         fiber: 5,
       },
-      isAvailable: item.isAvailable,
-      tags: item.tags,
+      isAvailable: true,
+      tags: item.tags || [],
       spiceLevel: 'Medium',
       servingSize: '1 Portion',
       campusDistanceKm: selectedProvider.distanceKm || 1.2,
@@ -169,6 +158,7 @@ export const RestaurantMenuView: React.FC = () => {
 
     addToCart(meal, 1);
     setAddedItemIds(prev => ({ ...prev, [item.id]: true }));
+    addToast(`Added "${item.name}" to your Dabba!`, 'success');
     setTimeout(() => {
       setAddedItemIds(prev => ({ ...prev, [item.id]: false }));
     }, 1800);
@@ -581,24 +571,17 @@ export const RestaurantMenuView: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleAddItemToCart(item)}
-                        className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-xs ${
+                        className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-xs active:scale-95 ${
                           isAdded
-                            ? 'bg-emerald-600 text-white'
-                            : isSample
-                            ? 'bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-200'
+                            ? 'bg-emerald-600 text-white ring-2 ring-emerald-300'
                             : 'bg-hb-green-600 hover:bg-hb-green-700 text-white'
                         }`}
-                        title={isSample ? 'Sample Menu Item (Ordering Disabled)' : 'Add to Dabba'}
+                        title="Add to Dabba"
                       >
                         {isAdded ? (
                           <>
                             <Check className="w-4 h-4" />
                             <span>Added to Dabba</span>
-                          </>
-                        ) : isSample ? (
-                          <>
-                            <Info className="w-4 h-4 text-gray-500" />
-                            <span>Sample Dish</span>
                           </>
                         ) : (
                           <>

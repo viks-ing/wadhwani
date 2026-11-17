@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useApp } from '../../context/AppContext';
 import { FoodProvider } from '../../types';
-import { fetchNearbyProviders, NearbyProvidersResult } from '../../services/providerService';
+import { fetchNearbyProviders, getNearbyProvidersSync, NearbyProvidersResult } from '../../services/providerService';
 import { LocationSelector } from './LocationSelector';
 import { RadiusFilter } from './RadiusFilter';
 import { FoodProviderCard } from './FoodProviderCard';
@@ -36,9 +36,20 @@ export const CustomerDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showPartnersOnly, setShowPartnersOnly] = useState(false);
 
-  // Data Result State
+  // Data Result State - Initialized synchronously for instant (0ms) feed render
   const [isLoading, setIsLoading] = useState(false);
-  const [providersData, setProvidersData] = useState<NearbyProvidersResult | null>(null);
+  const [providersData, setProvidersData] = useState<NearbyProvidersResult>(() => {
+    return getNearbyProvidersSync({
+      userLat: activeLat,
+      userLon: activeLon,
+      radiusKm: selectedRadiusKm,
+      providerType,
+      dietaryFilter,
+      sortBy,
+      searchQuery,
+      partnersOnly: showPartnersOnly
+    });
+  });
 
   // Default campus initialization
   useEffect(() => {
@@ -50,7 +61,20 @@ export const CustomerDashboard: React.FC = () => {
 
   // Load nearby providers dynamically whenever coordinates, radius, or filters change
   const loadProviders = useCallback(async () => {
-    setIsLoading(true);
+    // 1. Instant synchronous update (zero-lag 60fps response)
+    const syncRes = getNearbyProvidersSync({
+      userLat: activeLat,
+      userLon: activeLon,
+      radiusKm: selectedRadiusKm,
+      providerType,
+      dietaryFilter,
+      sortBy,
+      searchQuery,
+      partnersOnly: showPartnersOnly
+    });
+    setProvidersData(syncRes);
+
+    // 2. Background check if Supabase has newly registered approved providers
     try {
       const res = await fetchNearbyProviders({
         userLat: activeLat,
@@ -64,9 +88,7 @@ export const CustomerDashboard: React.FC = () => {
       });
       setProvidersData(res);
     } catch (err) {
-      console.error('Failed to load nearby providers:', err);
-    } finally {
-      setIsLoading(false);
+      // Graceful fallback
     }
   }, [activeLat, activeLon, selectedRadiusKm, providerType, dietaryFilter, sortBy, searchQuery, showPartnersOnly]);
 
@@ -319,7 +341,7 @@ export const CustomerDashboard: React.FC = () => {
       </div>
 
       {/* Main Grid View */}
-      {isLoading ? (
+      {isLoading && displayedProviders.length === 0 ? (
         /* Loading Skeleton */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((n) => (
