@@ -145,7 +145,7 @@ export const LandingPage: React.FC = () => {
                 {/* Main Hero Card */}
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white group">
                   <img
-                    src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=1000&q=80"
+                    src="https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?auto=format&fit=crop&w=1000&q=80"
                     alt="Authentic Homestyle Indian Thali"
                     className="w-full h-80 sm:h-96 object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   />
@@ -158,22 +158,11 @@ export const LandingPage: React.FC = () => {
                         <Flame className="w-3.5 h-3.5 text-hb-orange" /> Cooked 25 mins ago
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold leading-snug">Anita Aunty's Ghar Ka Rajma Chawal</h3>
+                    <h3 className="text-xl font-bold leading-snug">Special Homestyle Daily Thali</h3>
                     <p className="text-xs text-gray-200 mt-1 flex items-center justify-between">
                       <span>With Phulkas, Salad & Pure Cow Ghee</span>
                       <span className="text-base font-black text-hb-orange">₹99 only</span>
                     </p>
-                  </div>
-                </div>
-
-                {/* Floating Testimonial Capsule */}
-                <div className="absolute -bottom-6 -left-6 bg-white p-3.5 rounded-2xl shadow-float border border-hb-green-100 flex items-center gap-3 max-w-xs animate-subtle-pulse">
-                  <div className="w-10 h-10 rounded-full bg-hb-green-100 flex items-center justify-center text-hb-green-700 font-bold flex-shrink-0">
-                    🍲
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-gray-900">"Tastes just like mom's cooking!"</p>
-                    <p className="text-[10px] text-gray-500">Rohit M. • DTU 3rd Year CSE</p>
                   </div>
                 </div>
 
