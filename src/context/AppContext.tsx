@@ -7,7 +7,8 @@ import {
   Order, 
   OrderStatus, 
   SubscriptionPlan,
-  ChefApplication 
+  ChefApplication,
+  FoodProvider 
 } from '../types';
 import { 
   DEMO_USERS, 
@@ -41,7 +42,7 @@ interface ToastNotification {
   type: 'success' | 'info' | 'warning' | 'error';
 }
 
-export type ActiveViewType = 'landing' | 'customer' | 'chef' | 'delivery' | 'admin' | 'tracking' | 'subscriptions';
+export type ActiveViewType = 'landing' | 'customer' | 'chef' | 'delivery' | 'admin' | 'tracking' | 'subscriptions' | 'restaurant_menu';
 
 interface AppContextType {
   // Authentication & Session
@@ -81,6 +82,9 @@ interface AppContextType {
   activeView: ActiveViewType;
   setActiveView: (view: ActiveViewType) => void;
   navigateToView: (view: ActiveViewType) => void;
+  selectedProvider: FoodProvider | null;
+  setSelectedProvider: (provider: FoodProvider | null) => void;
+  openProviderMenu: (provider: FoodProvider) => void;
   currentCampus: string;
   setCurrentCampus: (campus: string) => void;
   userCoords: LatLon | null;
@@ -158,6 +162,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentCampus, setCurrentCampus] = useState<string>(() => localDb.get('current_campus', ''));
   const [userCoords, setUserCoords] = useState<LatLon | null>(() => localDb.get('user_coords', null));
   const [isLocating, setIsLocating] = useState<boolean>(false);
+  const [selectedProvider, setSelectedProvider] = useState<FoodProvider | null>(null);
+
+  const openProviderMenu = useCallback((provider: FoodProvider) => {
+    setSelectedProvider(provider);
+    setActiveView('restaurant_menu');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   // Data Store
   const [meals, setMeals] = useState<Meal[]>(() => localDb.get('meals_list', INITIAL_MEALS));
@@ -796,6 +807,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         activeView,
         setActiveView,
         navigateToView,
+        selectedProvider,
+        setSelectedProvider,
+        openProviderMenu,
         currentCampus,
         setCurrentCampus,
         userCoords,

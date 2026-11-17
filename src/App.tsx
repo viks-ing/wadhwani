@@ -9,6 +9,7 @@ import { CartDrawer } from './components/customer/CartDrawer';
 import { CheckoutModal } from './components/customer/CheckoutModal';
 import { OrderTrackingView } from './components/customer/OrderTrackingView';
 import { SubscriptionView } from './components/customer/SubscriptionView';
+import { RestaurantMenuView } from './components/customer/RestaurantMenuView';
 import { ChefDashboard } from './components/chef/ChefDashboard';
 import { DeliveryDashboard } from './components/delivery/DeliveryDashboard';
 import { AdminDashboard } from './components/admin/AdminDashboard';
@@ -34,6 +35,7 @@ export const AppContent: React.FC = () => {
         {activeView === 'landing' && <LandingPage />}
         {activeView === 'customer' && <CustomerDashboard />}
         {activeView === 'subscriptions' && <SubscriptionView />}
+        {activeView === 'restaurant_menu' && <RestaurantMenuView />}
         {activeView === 'tracking' && <OrderTrackingView />}
         {activeView === 'chef' && <ChefDashboard />}
         {activeView === 'delivery' && <DeliveryDashboard />}
