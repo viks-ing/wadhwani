@@ -15,7 +15,6 @@ import {
   INITIAL_MEALS, 
   INITIAL_ORDERS, 
   INITIAL_CHEF_APPLICATIONS,
-  CAMPUS_LOCATIONS,
   CHEF_LOCATIONS
 } from '../data/mockData';
 import { 

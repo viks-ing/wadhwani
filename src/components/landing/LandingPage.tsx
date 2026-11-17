@@ -21,7 +21,6 @@ import {
   Loader2,
   ChefHat
 } from 'lucide-react';
-import { CAMPUS_LOCATIONS } from '../../data/mockData';
 
 export const LandingPage: React.FC = () => {
   const { 
@@ -39,25 +38,11 @@ export const LandingPage: React.FC = () => {
   } = useApp();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [matchingCampuses, setMatchingCampuses] = useState(CAMPUS_LOCATIONS);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setSearchQuery(val);
-    if (!val.trim()) {
-      setMatchingCampuses(CAMPUS_LOCATIONS);
-    } else {
-      setMatchingCampuses(
-        CAMPUS_LOCATIONS.filter(c => 
-          c.name.toLowerCase().includes(val.toLowerCase()) || 
-          c.city.toLowerCase().includes(val.toLowerCase())
-        )
-      );
+  const selectCampusAndExplore = (campusName?: string) => {
+    if (campusName?.trim()) {
+      setCurrentCampus(campusName.trim());
     }
-  };
-
-  const selectCampusAndExplore = (campusName: string) => {
-    setCurrentCampus(campusName);
     setActiveView('customer');
   };
 
@@ -103,50 +88,17 @@ export const LandingPage: React.FC = () => {
                     <input
                       type="text"
                       value={searchQuery}
-                      onChange={handleSearchChange}
-                      placeholder="Enter college, hostel, or workplace (e.g. DTU, IIT Powai...)"
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Enter college, hostel, or workplace..."
                       className="w-full text-sm text-gray-800 placeholder-gray-400 focus:outline-none bg-transparent"
                     />
                   </div>
                   <button
-                    onClick={() => selectCampusAndExplore(searchQuery || CAMPUS_LOCATIONS[0].name)}
+                    onClick={() => selectCampusAndExplore(searchQuery || currentCampus)}
                     className="w-full sm:w-auto px-6 py-3 bg-hb-green-600 hover:bg-hb-green-700 text-white rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center gap-2 flex-shrink-0"
                   >
                     <span>Find Meals</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Popular Campus Suggestions & Live Location */}
-                <div className="mt-2.5 pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2 flex-wrap text-xs text-gray-500">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="font-semibold text-gray-400">Popular:</span>
-                    {CAMPUS_LOCATIONS.slice(0, 3).map((campus) => (
-                      <button
-                        key={campus.name}
-                        onClick={() => selectCampusAndExplore(campus.name)}
-                        className="px-2 py-0.5 rounded-full bg-hb-cream-200 hover:bg-hb-green-100 text-gray-700 hover:text-hb-green-800 transition text-[11px]"
-                      >
-                        {campus.name.split(',')[0]}
-                      </button>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={async () => {
-                      await detectAndSetLocation();
-                      setActiveView('customer');
-                    }}
-                    disabled={isLocating}
-                    className="px-2.5 py-1 rounded-full bg-hb-green-50 hover:bg-hb-green-100 text-hb-green-800 border border-hb-green-200 transition text-[11px] font-bold flex items-center gap-1.5 shadow-xs"
-                    title="Detect your live browser location"
-                  >
-                    {isLocating ? (
-                      <Loader2 className="w-3 h-3 text-hb-green-600 animate-spin" />
-                    ) : (
-                      <LocateFixed className="w-3 h-3 text-hb-green-600" />
-                    )}
-                    <span>{currentCampus ? `Live: ${currentCampus.split(',')[0]}` : 'Use Live GPS'}</span>
                   </button>
                 </div>
               </div>
