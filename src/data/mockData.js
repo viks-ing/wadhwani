@@ -396,6 +396,265 @@ export const SUBSCRIPTION_PLANS = [
         description: 'The ultimate pocket-friendly plan designed specifically for college budgets. Cheaper than dining halls and 10x healthier.'
     }
 ];
+export const DABBA_COMBO_MENUS = [
+    {
+        id: 'combo-telangana-thali',
+        name: 'Telangana Ghar Ka Full Thali Dabba',
+        kitchenName: "Anasuya Amma's Kitchen",
+        chefId: 'prov-snist-2',
+        chefName: 'Anasuya Amma',
+        category: 'Homestyle Veg',
+        dietary: 'veg',
+        badge: 'Campus Bestseller',
+        timing: 'Lunch & Dinner',
+        subscriptionPrice: 79,
+        trialPrice: 99,
+        originalPrice: 135,
+        rating: 4.9,
+        calories: 560,
+        protein: 18,
+        imageUrl: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
+        description: 'Authentic 3-tier steel dabba packed with steaming Sona Masoori rice, thick mudda pappu, crispy seasonal fry, tangy tomato rasam, fresh curd & homemade avakaya.',
+        tiers: [
+            'Tier 1: Steamed Sona Masoori Rice + Pure Cow Ghee',
+            'Tier 2: Mudda Pappu (Thick Dal) & Bendakaya / Aloo Fry',
+            'Tier 3: Tomato Rasam + Fresh Curd + Mango Avakaya'
+        ],
+        tags: ['Pure Ghee', 'Zero Soda', 'Student Favorite']
+    },
+    {
+        id: 'combo-north-executive',
+        name: 'North Indian Phulka & Paneer Executive Dabba',
+        kitchenName: "Mother's Touch Home Meals",
+        chefId: 'demo-part-16',
+        chefName: "Mother's Touch",
+        category: 'Homestyle Veg',
+        dietary: 'veg',
+        badge: 'Hostel Favorite',
+        timing: 'Lunch & Dinner',
+        subscriptionPrice: 85,
+        trialPrice: 109,
+        originalPrice: 149,
+        rating: 4.88,
+        calories: 590,
+        protein: 22,
+        imageUrl: 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&w=800&q=80',
+        description: 'Hot whole-wheat tawa phulkas brushed with desi ghee paired with homestyle Matar Paneer, Panchmel Dal Tadka, Jeera Rice, and cooling mint raita.',
+        tiers: [
+            'Tier 1: 4 Soft Whole-Wheat Ghee Phulkas + Jeera Rice',
+            'Tier 2: Homestyle Matar Paneer + Tadka Yellow Dal',
+            'Tier 3: Mint Cucumber Raita + Roasted Papad + Salad'
+        ],
+        tags: ['100% Atta', 'Low Oil', 'Balanced Thali']
+    },
+    {
+        id: 'combo-gym-chicken-millet',
+        name: 'Gym Freak High-Protein Chicken & Millet Dabba',
+        kitchenName: 'Preeti Fitness & High-Protein Dabba',
+        chefId: 'user-chef-2',
+        chefName: 'Preeti Deshmukh',
+        category: 'High-Protein',
+        dietary: 'non-veg',
+        badge: '42g Protein',
+        timing: 'Lunch / Post-Workout',
+        subscriptionPrice: 119,
+        trialPrice: 149,
+        originalPrice: 199,
+        rating: 4.94,
+        calories: 610,
+        protein: 42,
+        imageUrl: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80',
+        description: 'Macro-balanced fitness tiffin featuring lean homestyle chicken curry cooked in cold-pressed olive oil, multigrain rotis, millet pulao, and boiled egg whites.',
+        tiers: [
+            'Tier 1: 200g Lean Homestyle Chicken Curry (Low Oil)',
+            'Tier 2: 3 Multigrain Rotis + Foxtail Millet Rice',
+            'Tier 3: 2 Boiled Egg Whites + Sprouted Moong Salad'
+        ],
+        tags: ['42g Protein', 'Macro Counted', 'Gym Diet']
+    },
+    {
+        id: 'combo-south-breakfast',
+        name: 'South Indian Morning Tiffin Combo Box',
+        kitchenName: "Sunita's South Indian Breakfast Spot",
+        chefId: 'user-chef-4',
+        chefName: 'Sunita Raman',
+        category: 'South Indian',
+        dietary: 'veg',
+        badge: 'Morning Energy',
+        timing: 'Breakfast (7:30 – 9:30 AM)',
+        subscriptionPrice: 59,
+        trialPrice: 79,
+        originalPrice: 105,
+        rating: 4.95,
+        calories: 410,
+        protein: 13,
+        imageUrl: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80',
+        description: 'Naturally fermented fluffy idlis tossed in homemade karam podi & ghee with a crispy medu vada, hot drumstick sambar, and two fresh chutneys.',
+        tiers: [
+            'Tier 1: 3 Steaming Podi Ghee Idlis + 1 Medu Vada',
+            'Tier 2: Piping Hot Drumstick Toor Dal Sambar',
+            'Tier 3: Fresh Coconut Chutney + Ginger Allam Chutney'
+        ],
+        tags: ['Gut Healthy', 'Fresh Batter', 'Pocket Friendly']
+    },
+    {
+        id: 'combo-protein-paneer',
+        name: 'High-Protein Paneer Bhurji & Multigrain Dabba',
+        kitchenName: 'Preeti Fitness & High-Protein Dabba',
+        chefId: 'user-chef-2',
+        chefName: 'Preeti Deshmukh',
+        category: 'High-Protein',
+        dietary: 'veg',
+        badge: '32g Veg Protein',
+        timing: 'Lunch & Dinner',
+        subscriptionPrice: 105,
+        trialPrice: 129,
+        originalPrice: 169,
+        rating: 4.91,
+        calories: 540,
+        protein: 32,
+        imageUrl: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80',
+        description: 'Vegetarian strength builder loaded with 200g fresh low-fat cottage cheese bhurji, multigrain phulkas, yellow moong dal, and high-protein kala chana salad.',
+        tiers: [
+            'Tier 1: 200g Fresh Homestyle Paneer Bhurji',
+            'Tier 2: 3 Soft Multigrain Phulkas + Moong Dal',
+            'Tier 3: Kala Chana Protein Salad + Fresh Curd'
+        ],
+        tags: ['32g Protein', 'Zero Maida', 'Veg Fitness']
+    },
+    {
+        id: 'combo-hyderabadi-biryani',
+        name: 'Weekend Special Hyderabadi Dum Biryani Dabba',
+        kitchenName: "Farida's Dakhni Homestyle Kitchen",
+        chefId: 'user-chef-3',
+        chefName: 'Farida Begum',
+        category: 'Non-Veg Specials',
+        dietary: 'non-veg',
+        badge: 'Sunday Feast',
+        timing: 'Wed & Sun Special',
+        subscriptionPrice: 129,
+        trialPrice: 159,
+        originalPrice: 210,
+        rating: 4.96,
+        calories: 680,
+        protein: 34,
+        imageUrl: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+        description: 'Included every Wednesday & Sunday in Weekly/Monthly Non-Veg plans! Slow-cooked aromatic kacchi chicken dum biryani with roasted peanut salan & raita.',
+        tiers: [
+            'Tier 1: Aromatic Kacchi Chicken Dum Biryani (550g)',
+            'Tier 2: Roasted Peanut & Sesame Mirchi Ka Salan',
+            'Tier 3: Mint Onion Raita + Double Ka Meetha Bite'
+        ],
+        tags: ['Weekend Treat', 'Slow Dum Cooked', 'Homestyle Spices']
+    }
+];
+export const WEEKLY_DABBA_ROTATION = [
+    {
+        day: 'Mon',
+        fullDay: 'Monday',
+        highlight: 'Homestyle Comfort Kickoff',
+        lunch: {
+            title: 'Panchmel Dal Tadka + Aloo Jeera + 4 Ghee Phulkas + Rice',
+            sides: 'Boondi Raita & Green Salad',
+            calories: '540 kcal'
+        },
+        dinner: {
+            title: 'Telangana Mudda Pappu + Bendakaya Fry + Sona Masoori Rice',
+            sides: 'Tomato Rasam & Mango Avakaya',
+            calories: '520 kcal'
+        }
+    },
+    {
+        day: 'Tue',
+        fullDay: 'Tuesday',
+        highlight: 'North Indian Classic',
+        lunch: {
+            title: 'Punjabi Rajma Masala + Steamed Basmati Rice + 2 Phulkas',
+            sides: 'Sirka Pyaz & Roasted Papad',
+            calories: '570 kcal'
+        },
+        dinner: {
+            title: 'Palak Paneer + Yellow Moong Dal + 4 Soft Tawa Rotis',
+            sides: 'Fresh Curd & Mint Chutney',
+            calories: '550 kcal'
+        }
+    },
+    {
+        day: 'Wed',
+        fullDay: 'Wednesday',
+        highlight: 'Mid-Week High-Protein Feast',
+        lunch: {
+            title: 'Homestyle Chicken Curry (or Shahi Paneer) + Jeera Rice + 3 Rotis',
+            sides: 'Kachumber Salad & Raita',
+            calories: '610 kcal'
+        },
+        dinner: {
+            title: 'Ghee Moong Dal Khichdi + Baingan Bharta / Curd Bowl',
+            sides: 'Homemade Achaar & Papad',
+            calories: '460 kcal'
+        }
+    },
+    {
+        day: 'Thu',
+        fullDay: 'Thursday',
+        highlight: 'South Indian Traditional',
+        lunch: {
+            title: 'Drumstick Sambar + Gutti Vankaya Curry + Rice + 2 Chapatis',
+            sides: 'Curd Rice & Appadam',
+            calories: '560 kcal'
+        },
+        dinner: {
+            title: 'Protein Paneer Bhurji + Dal Fry + 3 Multigrain Phulkas',
+            sides: 'Sprouted Moong Salad',
+            calories: '530 kcal'
+        }
+    },
+    {
+        day: 'Fri',
+        fullDay: 'Friday',
+        highlight: 'Pindi Chole & Ghee Sweet',
+        lunch: {
+            title: 'Amritsari Pindi Chole + Jeera Rice + 3 Whole-Wheat Phulkas',
+            sides: 'Pickled Onion & Gulab Jamun (1 pc)',
+            calories: '600 kcal'
+        },
+        dinner: {
+            title: 'Mix Veg Kadhai + Toor Dal Tadka + 4 Tawa Rotis',
+            sides: 'Fresh Buttermilk (Chaas)',
+            calories: '510 kcal'
+        }
+    },
+    {
+        day: 'Sat',
+        fullDay: 'Saturday',
+        highlight: 'Light & Nourishing Weekend',
+        lunch: {
+            title: 'Bagara Rice + Dalcha + Aloo Gobi Dry + Curd',
+            sides: 'Crispy Fryums & Salad',
+            calories: '580 kcal'
+        },
+        dinner: {
+            title: 'Crispy Podi Ghee Dosa (2) + Idli (2) + Drumstick Sambar',
+            sides: 'Coconut & Ginger Chutney',
+            calories: '470 kcal'
+        }
+    },
+    {
+        day: 'Sun',
+        fullDay: 'Sunday',
+        highlight: 'Sunday Special Dum Biryani Day',
+        lunch: {
+            title: 'Hyderabadi Chicken / Veg Paneer Dum Biryani + Mirchi Ka Salan',
+            sides: 'Onion Raita & Double Ka Meetha',
+            calories: '670 kcal'
+        },
+        dinner: {
+            title: 'Light Homestyle Curd Rice + Tomato Dal + 3 Soft Phulkas',
+            sides: 'Homemade Lemon Pickle',
+            calories: '450 kcal'
+        }
+    }
+];
 export const INITIAL_ORDERS = [
     {
         id: 'ORD-8942',
