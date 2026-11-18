@@ -111,7 +111,7 @@ export const CustomerDashboard = () => {
             </div>
             <div className="w-px h-10 bg-white/20"></div>
             <div className="text-center px-2">
-              <span className="text-[11px] text-hb-cream-300 block font-semibold">HomeBite</span>
+              <span className="text-[11px] text-hb-cream-300 block font-semibold">NutriBite</span>
               <span className="text-2xl font-black text-emerald-300">{partnersCount}</span>
               <span className="text-[10px] text-hb-cream-300 block">Partners</span>
             </div>
@@ -161,7 +161,7 @@ export const CustomerDashboard = () => {
             addToast(`🔍 Search radius set to ${km} km`, 'info');
         }}/>
 
-          {/* HomeBite Partners Only Toggle */}
+          {/* NutriBite Partners Only Toggle */}
           <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-xl border border-gray-200/80 flex-shrink-0">
             <button type="button" onClick={() => setShowPartnersOnly(false)} className={`px-3 py-1 rounded-lg text-xs font-bold transition ${!showPartnersOnly ? 'bg-white text-gray-900 shadow-2xs' : 'text-gray-500 hover:text-gray-800'}`}>
               All Providers ({providersData?.totalCount || 0})
@@ -301,10 +301,10 @@ export const CustomerDashboard = () => {
       <div className="bg-hb-cream/60 rounded-3xl p-6 border border-hb-green-100 text-xs text-gray-600 space-y-2">
         <div className="flex items-center gap-2 font-black text-hb-green-900">
           <ShieldCheck className="w-4 h-4 text-hb-green-600"/>
-          <span>HomeBite Location Discovery & Verification Standard</span>
+          <span>NutriBite Location Discovery & Verification Standard</span>
         </div>
         <p className="leading-relaxed">
-          HomeBite clearly separates <strong>Approved HomeBite Partners</strong> (verified home kitchens with active menu ordering and delivery) from <strong>Discovered Local Candidates</strong> (real local businesses identified in Telangana research). Only approved partners can receive online orders.
+          NutriBite clearly separates <strong>Approved NutriBite Partners</strong> (verified home kitchens with active menu ordering and delivery) from <strong>Discovered Local Candidates</strong> (real local businesses identified in Telangana research). Only approved partners can receive online orders.
         </p>
       </div>
 

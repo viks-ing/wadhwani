@@ -107,7 +107,7 @@ export const AuthModal = () => {
               🍲
             </div>
             <div>
-              <span className="text-xl font-black tracking-tight font-display">HomeBite</span>
+              <span className="text-xl font-black tracking-tight font-display">NutriBite</span>
               <span className="block text-[10px] text-hb-cream-300 font-semibold uppercase tracking-wider">
                 Homemade • Daily • Fresh
               </span>
@@ -119,7 +119,7 @@ export const AuthModal = () => {
             ? 'Reset Your Password'
             : authMode === 'login'
                 ? 'Choose an Account to Login'
-                : 'Create Your HomeBite Account'}
+                : 'Create Your NutriBite Account'}
           </h2>
           <p className="text-xs text-hb-cream-200 mt-1">
             {isForgotPassword
@@ -307,7 +307,7 @@ export const AuthModal = () => {
 
               <div className="text-center pt-3 border-t border-gray-100">
                 <p className="text-gray-600">
-                  New to HomeBite?{' '}
+                  New to NutriBite?{' '}
                   <button type="button" onClick={() => { setAuthMode('register'); setErrorMessage(''); }} className="font-bold text-hb-green-700 hover:underline">
                     Create a New Account
                   </button>

@@ -38,7 +38,7 @@ export const FoodProviderCard = ({ provider }) => {
 
             {isPartner ? (<span className="px-2.5 py-1 rounded-xl bg-hb-green-600 text-white text-[10px] font-extrabold flex items-center gap-1 shadow-sm">
                 <ShieldCheck className="w-3 h-3 text-emerald-200"/>
-                <span>HomeBite Partner</span>
+                <span>NutriBite Partner</span>
               </span>) : (<span className="px-2.5 py-1 rounded-xl bg-gray-900/85 backdrop-blur-md text-amber-200 text-[10px] font-bold flex items-center gap-1 shadow-sm border border-amber-500/20">
                 <Info className="w-3 h-3 text-amber-400"/>
                 <span>Discovered Candidate</span>

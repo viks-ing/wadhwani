@@ -55,12 +55,12 @@ export const DEMO_USERS = {
     },
     admin: {
         id: 'user-admin-1',
-        name: 'HomeBite Operations Admin',
+        name: 'NutriBite Operations Admin',
         email: 'admin@homebite.in',
         role: 'admin',
         phone: '+91 99999 00000',
         avatarUrl: '',
-        address: 'HomeBite Central Command, Tech Park Hub, New Delhi',
+        address: 'NutriBite Central Command, Tech Park Hub, Hyderabad',
     },
 };
 export const DEMO_CREDENTIALS = [

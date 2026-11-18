@@ -173,7 +173,7 @@ export const RestaurantMenuView = () => {
 
               {isPartner ? (<span className="px-3 py-1 rounded-xl bg-hb-green-600 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-md">
                   <ShieldCheck className="w-4 h-4 text-emerald-200"/>
-                  <span>HomeBite Partner (Ordering Enabled)</span>
+                  <span>NutriBite Partner (Ordering Enabled)</span>
                 </span>) : (<span className="px-3 py-1 rounded-xl bg-gray-900/90 backdrop-blur text-amber-200 text-xs font-bold flex items-center gap-1.5 shadow-md border border-amber-500/30">
                   <Info className="w-4 h-4"/>
                   <span>Discovered Candidate (Preview Mode)</span>
@@ -280,7 +280,7 @@ export const RestaurantMenuView = () => {
                   Ordering Safeguard Active
                 </strong>
                 <p className="text-amber-800">
-                  {selectedProvider.name} is currently a discovered food business candidate. The dishes listed below are representative sample items tailored to this establishment's cuisine. Live online ordering and payments are enabled only for confirmed HomeBite partner kitchens.
+                  {selectedProvider.name} is currently a discovered food business candidate. The dishes listed below are representative sample items tailored to this establishment's cuisine. Live online ordering and payments are enabled only for confirmed NutriBite partner kitchens.
                 </p>
               </div>
             </div>)}

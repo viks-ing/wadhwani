@@ -33,7 +33,7 @@ export const Navbar = () => {
               </div>
               <div>
                 <span className="text-2xl font-black text-hb-green-800 tracking-tight flex items-center gap-1 font-display">
-                  HomeBite
+                  NutriBite
                   <span className="w-2 h-2 rounded-full bg-hb-orange inline-block"></span>
                 </span>
                 <span className="block text-[11px] font-semibold text-hb-green-600 tracking-wider uppercase">

@@ -222,7 +222,7 @@ export const LandingPage = () => {
           
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-xs font-extrabold text-hb-orange uppercase tracking-wider bg-hb-orange-50 px-3 py-1 rounded-full border border-hb-orange-200">
-              The Daily Struggle vs. The HomeBite Way
+              The Daily Struggle vs. The NutriBite Way
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-display">
               Why Campus Food Sucks & How We Fix It
@@ -287,7 +287,7 @@ export const LandingPage = () => {
               </div>
             </div>
 
-            {/* The HomeBite Solution Card */}
+            {/* The NutriBite Solution Card */}
             <div className="bg-hb-green-50/70 border-2 border-hb-green-300 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-soft">
               <div>
                 <div className="flex items-center gap-3 mb-6">
@@ -295,7 +295,7 @@ export const LandingPage = () => {
                     ✓
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-hb-green-950">The HomeBite Experience</h3>
+                    <h3 className="text-xl font-bold text-hb-green-950">The NutriBite Experience</h3>
                     <p className="text-xs text-hb-green-800">Hyperlocal, mom-cooked, affordable & nutritious</p>
                   </div>
                 </div>
@@ -355,7 +355,7 @@ export const LandingPage = () => {
               Simple 4-Step Process
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-display">
-              How HomeBite Works
+              How NutriBite Works
             </h2>
             <p className="text-sm sm:text-base text-gray-600 mt-2">
               From local home kitchen to your hostel plate in under 30 minutes.
@@ -522,7 +522,7 @@ export const LandingPage = () => {
               Our Core Promise
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 font-display">
-              Why Students & Professionals Choose HomeBite
+              Why Students & Professionals Choose NutriBite
             </h2>
           </div>
 
@@ -543,7 +543,7 @@ export const LandingPage = () => {
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">FSSAI Certified & Inspected Kitchens</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Every home chef on HomeBite undergoes strict personal kitchen audits, hair-net & hygiene checks, and must hold a verified FSSAI registration.
+                Every home chef on NutriBite undergoes strict personal kitchen audits, hair-net & hygiene checks, and must hold a verified FSSAI registration.
               </p>
             </div>
 
@@ -588,7 +588,7 @@ export const LandingPage = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">🍲</span>
-                <span className="text-xl font-black text-white font-display">HomeBite</span>
+                <span className="text-xl font-black text-white font-display">NutriBite</span>
               </div>
               <p className="text-gray-400 text-xs leading-relaxed">
                 Hyperlocal homemade meal marketplace built for students and young professionals. Wholesome, hygienic, and affordable.
@@ -637,7 +637,7 @@ export const LandingPage = () => {
           </div>
 
           <div className="pt-8 border-t border-hb-green-900 flex flex-col sm:flex-row items-center justify-between text-gray-500 text-[11px]">
-            <p>© 2026 HomeBite Technologies Pvt. Ltd. Made with ❤️ for hungry hostelites.</p>
+            <p>© 2026 NutriBite Technologies Pvt. Ltd. Made with ❤️ for hungry hostelites.</p>
             <p>Empowering local home chefs across 45+ campuses.</p>
           </div>
         </div>

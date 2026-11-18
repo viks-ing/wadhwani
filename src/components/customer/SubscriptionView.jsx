@@ -395,7 +395,7 @@ export const SubscriptionView = () => {
             {/* 4. Subscription FAQ / Highlights */}
             <div className="bg-hb-cream rounded-3xl p-6 sm:p-8 border border-hb-green-200">
                 <h3 className="text-lg font-bold text-gray-900 mb-4 font-display">
-                    How HomeBite Subscriptions Work For Students
+                    How NutriBite Subscriptions Work For Students
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-gray-600">
                     <div className="flex items-start gap-3">

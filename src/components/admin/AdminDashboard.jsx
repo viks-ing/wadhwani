@@ -298,7 +298,7 @@ export const AdminDashboard = () => {
                 HB
               </div>
               <div>
-                <h2 className="text-base font-black text-gray-900 leading-none">HomeBite</h2>
+                <h2 className="text-base font-black text-gray-900 leading-none">NutriBite</h2>
                 <span className="text-[10px] font-extrabold text-hb-green-700 uppercase tracking-wider block mt-1">
                   Central Admin Ops
                 </span>
@@ -435,7 +435,7 @@ export const AdminDashboard = () => {
                 <div className="flex items-center gap-2">
                   <span className="px-3 py-1 rounded-full bg-hb-green-100 text-hb-green-800 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5"/>
-                    <span>HomeBite Admin Console</span>
+                    <span>NutriBite Admin Console</span>
                   </span>
                   <span className="text-xs text-gray-400">Database Role: Verified Admin</span>
                 </div>

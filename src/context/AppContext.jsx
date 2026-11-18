@@ -331,7 +331,7 @@ export const AppProvider = ({ children }) => {
             confetti({ particleCount: 60, spread: 55, origin: { y: 0.6 } });
         }
         catch (e) { }
-        addToast(`Account created successfully! Welcome to HomeBite, ${fullName} 🎉`, 'success');
+        addToast(`Account created successfully! Welcome to NutriBite, ${fullName} 🎉`, 'success');
     };
     // LOGOUT: strictly terminates session so user can access another role
     const logout = () => {
